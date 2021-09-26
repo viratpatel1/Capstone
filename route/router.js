@@ -62,7 +62,7 @@ router.post("/uploadpost", upload.single('image'), async (req, res) =>
 
     } catch (error)
     {
-        res.status(400).json({ message: "Not uploaded" });
+       return res.status(400).json({ message: "Not uploaded" });
 
     }
 });
@@ -138,13 +138,14 @@ router.post("/sign-in", async (req, res) =>
                 res.cookie("jwtoken", token, {
                     expires: new Date(Date.now() + 90000),
                     httpOnly: true
-                })
+                });
                 return res.status(200).json({ check, message: "Login Successfully", token });
             }
         }
     } catch (error)
     {
         console.log(error.message);
+        return res.status(400).json({message:error.message})
     }
 
 });
