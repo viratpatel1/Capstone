@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Image from './Home';
+import '../CSS/UploadPost.css';
 
 const style = {
     position: 'absolute',
@@ -25,7 +26,7 @@ export default function UploadPost({ children })
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
+            <Button class="model" onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
