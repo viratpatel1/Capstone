@@ -52,6 +52,17 @@ export default function MediaControlCard()
             .catch((err) => toast(err.response.data.message));
 
     }
+    useEffect(() =>
+    {
+        if ((token === "undefined") || (token === null))
+        {
+            history.push("/sign-in");
+
+        } else
+        {
+            history.push("/profile");
+        }
+    }, [])
 
     useEffect(() =>
     {
