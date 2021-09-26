@@ -14,16 +14,30 @@ export const Signin = () =>
 {
     const history = useHistory();
     const { register, handleSubmit } = useForm();
-    // const { _id } = useParams();
-    // console.log(_id)
+    const token = localStorage.getItem('jwtoken');
+
+
+    useEffect(() =>
+    {
+        if ((token === "undefined") || (token === null))
+        {
+            history.push("/sign-in");
+
+        } else
+        {
+            history.push("/home");
+        }
+    }, [])
+
 
     const onSubmit = handleSubmit(async (data) =>
     {
         const { email, password } = data;
+
         await axios.post(`${url}sign-in`, { email, password })
             .then((data) =>
             {
-                // console.log(data)
+
                 try
                 {
                     localStorage.setItem('jwtoken', data.data.token);
