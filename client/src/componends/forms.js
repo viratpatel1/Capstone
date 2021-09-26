@@ -8,7 +8,7 @@ import "../CSS/form.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-const url = "http://localhost:5000/";
+const url = "https://captone-project.herokuapp.com/";
 
 export const Signin = () =>
 {

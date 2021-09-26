@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Image from './Home';
 import '../CSS/ProfilePage.css';
 
-const url = "http://localhost:5000/";
+const url = "https://captone-project.herokuapp.com/";
 
 
 export default function MediaControlCard()
