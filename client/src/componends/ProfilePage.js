@@ -26,6 +26,7 @@ export default function MediaControlCard()
     const [image, setImage] = useState();
     const [name, setName] = useState([]);
     const [imagemsg, setImageMsg] = useState()
+    const history = useHistory();
 
     const token = localStorage.getItem('jwtoken');
 
