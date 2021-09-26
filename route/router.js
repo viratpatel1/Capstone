@@ -32,11 +32,11 @@ const upload = multer({
     storage: storage,
 });
 
-router.get("/home", Auth, (req, res) =>
-{
-    console.log("Welcome to Home Page")
-    // res.send(req.rootUser)
-})
+// router.get("/home", Auth, (req, res) =>
+// {
+//     console.log("Welcome to Home Page")
+//     // res.send(req.rootUser)
+// })
 
 // router.get('/profile', express.static('uploadsfol/images'));
 router.post("/uploadpost", upload.single('image'), async (req, res) =>
@@ -50,6 +50,7 @@ router.post("/uploadpost", upload.single('image'), async (req, res) =>
             imagemsg: req.body.imagemsg
         });
 
+        // await unlinkFile(file.path)
         await userpost.save();
         return res.status(200).json({ message: "Uploaded" })
 
