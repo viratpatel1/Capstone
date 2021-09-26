@@ -1,0 +1,19 @@
+.nav {
+  height: 70px;
+  background-color: black;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home,
+.account {
+  color: rgb(245, 209, 209);
+  cursor: pointer;
+}
+Link {
+  font-size: 50px;
+  color: white;
+}
+ExitToAppIcon {
+  color: white;
+}
