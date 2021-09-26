@@ -32,24 +32,22 @@ export const Signin = () =>
 
     const onSubmit = handleSubmit(async (data) =>
     {
-        const { email, password } = data;
-
-        await axios.post(`${url}sign-in`, { email, password })
-            .then((data) =>
-            {
-
-                try
+        try
+        {
+            const { email, password } = data;
+            await axios.post(`${url}sign-in`, { email, password })
+                .then((res) =>
                 {
-                    localStorage.setItem('jwtoken', data.data.token);
-                    toast(data.data.message)
+                    localStorage.setItem('jwtoken', res.data.token);
+                    toast(res.data.message)
                     history.push("/home")
-                } catch (error)
-                {
-                    console.log(error.response.data.message)
-                    toast(error.response.data.message)
-                }
-            })
-            .catch((err) => toast(err.response.data.message));
+                })
+                .catch((err) => toast(err.response.data.message));
+        } catch (error)
+        {
+            toast(error.response.data.message)
+            console.log(error.response)
+        }
     });
     return (
         <div className="box">
