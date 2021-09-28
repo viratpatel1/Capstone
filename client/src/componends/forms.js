@@ -80,13 +80,19 @@ export const Signup = () =>
 {
 
     const { register, handleSubmit } = useForm();
+    const history = useHistory()
 
     const onSubmit = handleSubmit((data) =>
     {
         const { fullname, email, number, password } = data;
         axios.post(`${url}sign-up`, { fullname, email, number, password })
-            .then((re) => toast(re.data.message))
+            .then((re) =>
+            {
+                toast(re.data.message)
+                history.push("/sign-in")
+            })
             .catch((err) => toast(err.response.data.message))
+
     })
 
     return (

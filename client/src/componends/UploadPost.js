@@ -25,9 +25,10 @@ export default function UploadPost({ children })
     const handleClose = () => setOpen(false);
 
     return (
-        <div>
-            <Button class="model" onClick={handleOpen}>Open modal</Button>
+        <div  >
+            <Button class="model" onClick={handleOpen}>Post</Button>
             <Modal
+                className="pop-model"
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

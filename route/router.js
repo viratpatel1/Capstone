@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import { Auth } from '../middleware/login_auth.js';
 import util from 'util';
 import fs from 'fs';
+import base64 from 'base-64';
 dotenv.config();
 import { uploadFile, getFileStream } from '../s3.js';
 
@@ -17,61 +18,33 @@ import { uploadFile, getFileStream } from '../s3.js';
 const unlinkFile = util.promisify(fs.unlink)
 const router = express.Router();
 
+
+// creating the image extension and giving the location 
 const storage = multer.diskStorage({
-    destination: 'uploadsfol/images',
+    destination: 'uploads',
     filename: function (req, file, cb)
     {
         // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+
         const uniqueSuffix = Date.now() + path.extname(file.originalname)
         cb(null, file.fieldname + '_' + uniqueSuffix)
     }
 });
 
 
+// Multer middleware for image-upload
 const upload = multer({
     storage: storage,
 });
 
-// router.get("/home", Auth, (req, res) =>
-// {
-//     console.log("Welcome to Home Page")
-//     // res.send(req.rootUser)
-// })
-
-// router.get('/profile', express.static('uploadsfol/images'));
-router.post("/uploadpost", upload.single('image'), async (req, res) =>
-{
-    // console.log(req.body)
-    console.log(req.file.filename)
-    try
-    {
-        let userpost = new UserPost({
-            image: req.file.filename,
-            imagemsg: req.body.imagemsg
-        });
-
-        // await unlinkFile(file.path)
-        await userpost.save();
-        return res.status(200).json({ message: "Uploaded" })
-
-        // res.send({
-        //     success: 1,
-        //     profileUrl: `http://localhost:5000/profile/${req.file.filename}`
-        // })
-        // console.log(`http://localhost:5000/profile/${req.file.filename}`)
-
-    } catch (error)
-    {
-       return res.status(400).json({ message: "Not uploaded" });
-
-    }
-});
 
 
 
 
 
 
+
+//Practise Code Start Here
 
 // router.get("/images/:key", (req, res) =>
 // {
@@ -97,6 +70,13 @@ router.post("/uploadpost", upload.single('image'), async (req, res) =>
 //     return res.send("NODE STARTED");
 // });
 
+//Practise Code End Here
+
+
+
+
+//Routing starts here
+//To Get All User 
 router.get("/u", async (req, res) =>
 {
     await Register.find()
@@ -104,6 +84,8 @@ router.get("/u", async (req, res) =>
         .catch(() => res.send("Not Fetch"))
 });
 
+
+//To get All Post 
 router.get("/posts", async (req, res) =>
 {
     await UserPost.find()
@@ -111,6 +93,8 @@ router.get("/posts", async (req, res) =>
         .catch((error) => res.send(error))
 })
 
+
+//For Login
 router.post("/sign-in", async (req, res) =>
 {
 
@@ -145,11 +129,13 @@ router.post("/sign-in", async (req, res) =>
     } catch (error)
     {
         console.log(error.message);
-        return res.status(400).json({message:error.message})
+        return res.status(400).json({ message: error.message })
     }
 
 });
 
+
+//For Register
 router.post("/sign-up", async (req, res) =>
 {
     try
@@ -185,7 +171,47 @@ router.post("/sign-up", async (req, res) =>
     }
 });
 
+//For Uploading the Image
+router.post("/uploadpost", upload.single('image'), async (req, res) =>
+{
+    const files = req.file;
+
+    var encodeImg = []
+    try
+    {
+        if (!files) return res.status(400).json({ message: "Please Select a Photo" });
+
+        let img = fs.readFileSync(req.file.path)
+        encodeImg = img.toString('base64')
+
+        let userpost = new UserPost({
+            filename: files.originalname,
+            contentType: files.mimetype,
+            // image: files.filename,
+            image: encodeImg,
+            imagemsg: req.body.imagemsg
+        })
+
+        // await unlinkFile(file.path)
+        await userpost.save();
+        // return res.send(userpost)
+        return res.status(200).json({ message: "Image Uploaded Successfully" });
+
+        // res.send({
+        //     success: 1,
+        //     profileUrl: `http://localhost:5000/profile/${req.file.filename}`
+        // })
+        // console.log(`http://localhost:5000/profile/${req.file.filename}`)
+
+    } catch (error)
+    {
+        return res.status(400).json({ message: "Something went Wrong" });
+
+    }
+})
 
 
 
-export default router;
+
+
+export default router

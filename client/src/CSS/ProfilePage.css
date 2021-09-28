@@ -4,3 +4,36 @@
   transform: translateX(-50%);
   /* justify-content: center; */
 }
+
+.post-form {
+  margin: -32px;
+  background-color: rgb(164, 237, 247);
+}
+
+.comment {
+  text-align: center;
+  display: grid;
+  font-weight: 700;
+  word-spacing: 5px;
+}
+
+.post-image {
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  margin: 5px 0 0 0;
+  font-weight: 700;
+  word-spacing: 5px;
+}
+
+.button {
+  text-align: center;
+  padding: 0 10px 0 10px;
+  border-radius: 10px;
+  margin: 10px 0 10px 40%;
+}
+
+.button:hover {
+  background-color: rgb(78, 78, 218);
+  color: white;
+}

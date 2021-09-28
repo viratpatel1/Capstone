@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from './Home';
 import '../CSS/ProfilePage.css';
+import fs from 'fs';
 
 const url = "https://captone-project.herokuapp.com/";
 
@@ -30,6 +31,7 @@ export default function MediaControlCard()
 
     const token = localStorage.getItem('jwtoken');
 
+    const url = "https://captone-project.herokuapp.com/";
 
 
     const handleChange = (e) =>
@@ -43,6 +45,19 @@ export default function MediaControlCard()
         const formData = new FormData();
         formData.append("image", image);
         formData.append("imagemsg", imagemsg)
+        // let files = image;
+        // let filess = Object.entries(files)
+        // console.log(filess)
+        // console.log(files)
+
+        // if (!files) return res.status(400).json({ message: "Please Select a File" });
+
+        // let imgPhoto = filess.map((file) =>
+        // {
+        //     let img = fs.readFileSync(file.path)
+        //     return img.toString('base64')
+        // });
+        // console.log(imgPhoto)
 
         const congir = {
             Headers: {
@@ -65,7 +80,7 @@ export default function MediaControlCard()
         {
             history.push("/profile");
         }
-    }, [])
+    }, []);
 
     useEffect(() =>
     {
@@ -145,12 +160,16 @@ export default function MediaControlCard()
                 />
             </Card>
             <UploadPost>
-                <form onSubmit={onSubmit} >
-                    <label>Yr message</label>
-                    <input type="text" name="imagemsg" onChange={(e) => setImageMsg(e.target.value)} ></input>
-                    <label>Select Image</label>
-                    <input type="file" name="image" onChange={handleChange} ></input>
-                    <button onSubmit={onSubmit} >Submit</button>
+                <form className="post-form" onSubmit={onSubmit} >
+                    <div className="comment" >
+                        <label>What's in Your Mind</label>
+                        <input style={{ width: "40%", margin: "5px 0 0 30%", borderRadius: "5px" }} type="text" name="imagemsg" onChange={(e) => setImageMsg(e.target.value)} placeholder="Comment..." ></input>
+                    </div>
+                    <div className="post-image">
+                        <label>Select Image</label>
+                        <input type="file" name="image" onChange={handleChange} ></input>
+                    </div>
+                    <button className="button" onSubmit={onSubmit} >Submit</button>
                 </form>
                 <ToastContainer />
             </UploadPost>
